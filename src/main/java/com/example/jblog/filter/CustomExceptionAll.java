@@ -1,6 +1,6 @@
 package com.example.jblog.filter;
 
-import com.example.jblog.filter.dto.ExceptionResponseDto;
+import com.example.jblog.filter.dto.MyExceptionResponse;
 import jakarta.persistence.EntityNotFoundException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.ConstraintViolation;
@@ -18,7 +18,7 @@ import java.sql.SQLException;
 import java.util.Optional;
 
 @ControllerAdvice
-public class CustomExceptionHandler {
+public class CustomExceptionAll {
     @ExceptionHandler({ ConstraintViolationException.class })
     public ResponseStatusException handleError1(HttpServletRequest req, Exception ex) {
 
@@ -42,7 +42,12 @@ public class CustomExceptionHandler {
         }
         return new ResponseStatusException(HttpStatus.CONFLICT, msg, ex);
     }
-
+    @ExceptionHandler(ResourceNotFoundException.class)
+    public ResponseEntity<Object> handleResourceNotFoundException(ResourceNotFoundException ex) {
+        String message = ex.getMessage();
+        MyExceptionResponse errorResponse = new MyExceptionResponse(HttpStatus.NOT_FOUND, message);
+        return new ResponseEntity<>(errorResponse, HttpStatus.NOT_FOUND);
+    }
 
     @ExceptionHandler(EntityNotFoundException.class)
     public ResponseStatusException handleEntityNotFoundException(EntityNotFoundException ex) {

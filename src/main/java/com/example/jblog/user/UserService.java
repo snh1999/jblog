@@ -1,4 +1,4 @@
-package com.example.jblog.service;
+package com.example.jblog.user;
 
 import com.example.jblog.model.User;
 import com.example.jblog.repository.UserRepo;

@@ -1,6 +1,6 @@
 package com.example.jblog.config;
 
-import com.example.jblog.service.UserService;
+import com.example.jblog.user.UserService;
 import lombok.AllArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

@@ -3,11 +3,11 @@ package com.example.jblog.model;
 import java.time.Instant;
 import java.util.List;
 
+import com.example.jblog.model.enums.GroupType;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import jakarta.validation.constraints.NotBlank;
 
@@ -30,21 +30,27 @@ public class Group {
     private String description;
     @Builder.Default
     private Instant createdAt = Instant.now();
+    @Column(unique = true)
+    private String url;
 
-    @OneToMany(mappedBy = "group", fetch = LAZY, cascade = CascadeType.ALL)
-    private List<Post> posts;
+    @Builder.Default
+    private GroupType groupType = GroupType.PUBLIC;
 
-    @ManyToMany(fetch = LAZY, cascade = CascadeType.REMOVE)
-    @JoinTable(
-        name = "member_table", 
-        joinColumns = { @JoinColumn(name = "group_id") }, 
-        inverseJoinColumns = { @JoinColumn(name = "member_id") },
-        uniqueConstraints = {@UniqueConstraint(
-            columnNames = {"group_id", "member_id"}
-        )}
-    )
-    private List<User> members;
+    @JsonIgnore
+    @OneToMany(mappedBy = "group", cascade = CascadeType.ALL)
+    private List<GroupMember> members;
 
+//    @ManyToMany(fetch = LAZY, cascade = CascadeType.REMOVE)
+//    @JoinTable(
+//        name = "member_table",
+//        joinColumns = { @JoinColumn(name = "group_id") },
+//        inverseJoinColumns = { @JoinColumn(name = "member_id") },
+//        uniqueConstraints = {@UniqueConstraint(
+//            columnNames = {"group_id", "member_id"}
+//        )}
+//    )
+//    private List<User> members;
+    @JsonIgnore
     @ManyToMany(fetch = LAZY, cascade = CascadeType.REMOVE)
     @JoinTable(
         name = "moderator_table", 
@@ -55,7 +61,12 @@ public class Group {
     )
     private List<User> moderators;
 
-    @ManyToOne
+    @JsonIgnore
+    @ManyToOne(fetch = LAZY)
     @JoinColumn(name = "ownerId")
     private User owner;
+
+    public String getOwnerName() {
+        return this.owner.getUsername();
+    }
 }

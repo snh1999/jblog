@@ -1,6 +1,7 @@
 package com.example.jblog.model;
 
 import com.example.jblog.model.enums.ROLE;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -31,6 +32,7 @@ import java.time.Instant;
 @Entity
 @Table(name = "_user")
 public class User implements UserDetails {
+    @JsonIgnore
     @Id
     @GeneratedValue(strategy = UUID)
     private String id;
@@ -40,49 +42,59 @@ public class User implements UserDetails {
     @NotBlank(message = "username is required and has to be unique")
     @Column(unique = true)
     private String username;
+    @JsonIgnore
     @NotBlank(message = "Password is required")
     private String password;
     @Email
     @NotEmpty(message = "Email is required and has to be unique")
     @Column(unique = true)
     private String email;
+    @JsonIgnore
     @Builder.Default
     private Instant joinedAt = Instant.now();
+    @JsonIgnore
     @Builder.Default
     private boolean enabled = false;
-
+    @JsonIgnore
     @Builder.Default
     private ROLE role = ROLE.USER;
+    @JsonIgnore
     @Builder.Default
     private Instant passwordChangedAt = Instant.now();
 
-    @ManyToMany(mappedBy = "members", fetch = LAZY)
-    private List<Group> groups;
+    @JsonIgnore
+//    @ManyToMany(mappedBy = "members", fetch = LAZY)
+//    private List<Group> groups;
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
+    private List<GroupMember> groups;
 
+    @JsonIgnore
     @OneToMany(mappedBy = "owner", fetch = LAZY, cascade = CascadeType.ALL)
     private List<Group> ownedGroups;
 
+    @JsonIgnore
     @OneToMany(mappedBy = "author", fetch = LAZY, cascade = CascadeType.ALL)
     private List<Post> posts;
 
-
-
-
+    @JsonIgnore
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         return List.of(new SimpleGrantedAuthority(role.name()));
     }
 
+    @JsonIgnore
     @Override
     public boolean isAccountNonExpired() {
         return true;
     }
 
+    @JsonIgnore
     @Override
     public boolean isAccountNonLocked() {
         return true;
     }
 
+    @JsonIgnore
     @Override
     public boolean isCredentialsNonExpired() {
         return true;

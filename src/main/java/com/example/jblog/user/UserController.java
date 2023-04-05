@@ -1,7 +1,6 @@
-package com.example.jblog.controller;
+package com.example.jblog.user;
 
 import com.example.jblog.model.User;
-import com.example.jblog.service.UserService;
 import lombok.AllArgsConstructor;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;

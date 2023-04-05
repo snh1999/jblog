@@ -1,5 +1,6 @@
 package com.example.jblog.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -32,10 +33,14 @@ public class Comment {
     @Builder.Default
     private Instant createdDate = Instant.now();
 
-    @ManyToOne //(fetch = LAZY)
+
+    @JsonIgnore
+    @ManyToOne(fetch = LAZY)
     @JoinColumn(name = "postId", referencedColumnName = "id")
     private Post parentPost;
-    @ManyToOne //(fetch = LAZY)
+
+    @JsonIgnore
+    @ManyToOne(fetch = LAZY)
     @JoinColumn(name = "userId", referencedColumnName = "id")
     private User author;
 
@@ -43,7 +48,12 @@ public class Comment {
     @ManyToOne
     @JoinColumn(name = "parent_comment", referencedColumnName = "id")
     private Comment parentComment;
-    
+
+    @JsonIgnore
     @OneToMany(fetch = LAZY, mappedBy = "parentComment")
     private List<Comment> comments;
+
+    public String getAuthorName() {
+        return this.author.getUsername();
+    }
 }

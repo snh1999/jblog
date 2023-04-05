@@ -1,6 +1,7 @@
 package com.example.jblog.model;
 
 import com.example.jblog.model.enums.PostCategory;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -26,9 +27,8 @@ public class Post {
     private String id;
     @NotBlank(message = "Title cannot be empty or Null")
     private String title;
-    @Nullable
+    @Column(unique = true)
     private String url;
-    @Nullable
     @Lob
     private String description;
     private Integer voteCount;
@@ -36,7 +36,8 @@ public class Post {
     private Instant createdAt = Instant.now();
     private PostCategory category; // create index on this
 
-    @ManyToOne
+    @JsonIgnore
+    @ManyToOne(fetch = LAZY)
     @JoinColumn(name = "authorId") // , referencedColumnName = "userId")
     private User author;
 
@@ -44,6 +45,7 @@ public class Post {
     @JoinColumn(name = "groupId") // , referencedColumnName = "groupId")
     private Group group;
 
+    @JsonIgnore
     @OneToMany(mappedBy = "parentPost", fetch = LAZY, cascade = CascadeType.ALL)
     private List<Comment> comments;
 }

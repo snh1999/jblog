@@ -1,5 +1,46 @@
-http://localhost:8080/api/users
 
-http://localhost:8080/api/users
+GET http://localhost:8080/api/users
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJiYWxseSIsImlhdCI6MTY4MDQ1NzE5OCwiZXhwIjoxNjg4MjMzMTk4fQ.kpjz8pUoMwrz5C5NZEEiUDuJzRRXDbtQVLssUSN3TOo
+
+###
+POST http://localhost:8080/api/group
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJiYWxseSIsImlhdCI6MTY4MDQ1NzE5OCwiZXhwIjoxNjg4MjMzMTk4fQ.kpjz8pUoMwrz5C5NZEEiUDuJzRRXDbtQVLssUSN3TOo
+Content-Type: application/json
+
+{
+    
+}
+
+###
+DELETE  http://localhost:8080/api/users
+
+###
+POST http://localhost:8080/api/auth/register 
+Content-Type: application/json
+
+{
+    "username": "bally",
+    "email": "abc.xyvbz@gmail.com",
+    "password": "696jfhdsjfhds9"
+}
 
 
+### LOG In
+POST http://localhost:8080/api/auth/login 
+Content-Type: application/json
+
+{
+    "username": "bally",
+    "email": "abc.xyvbz@gmail.com",
+    "password": "696jfhdsjfhds9"
+}
+
+###
+GET http://localhost:8080/api/auth/52746c70-be03-4b3f-8cf3-bada363e5042
+### 
+POST http://localhost:8080/api/auth/resend_token
+Content-Type: application/json
+
+{
+    "email": "abc.xyvbz@gmail.com"
+}

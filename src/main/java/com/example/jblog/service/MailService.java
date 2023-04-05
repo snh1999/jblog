@@ -9,10 +9,9 @@ import org.springframework.scheduling.annotation.Async;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Service;
 
-import com.example.jblog.filter.AllExceptionGuard;
+import com.example.jblog.filter.GenericException;
 import com.example.jblog.model.Email;
 
-import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
 @Service
@@ -36,7 +35,7 @@ public class MailService {
             mailSender.send(messagePreparator);
             log.info("Email sent!!");
         } catch (MailException e) {
-            throw new AllExceptionGuard("Error, could not send mail to " + email.getRecipient());
+            throw new GenericException("Error, could not send mail to " + email.getRecipient());
         }
     }
 

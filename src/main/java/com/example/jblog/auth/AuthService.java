@@ -8,9 +8,11 @@ import com.example.jblog.auth.dto.AuthenticationResponse;
 import com.example.jblog.model.enums.TokenType;
 import com.example.jblog.service.JwtService;
 import com.example.jblog.service.MailService;
-import com.example.jblog.service.UserService;
+import com.example.jblog.user.UserService;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -18,7 +20,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.example.jblog.auth.dto.LoginDto;
 import com.example.jblog.auth.dto.RegisterDto;
-import com.example.jblog.filter.AllExceptionGuard;
+import com.example.jblog.filter.GenericException;
 import com.example.jblog.model.Email;
 import com.example.jblog.model.Token;
 import com.example.jblog.model.User;
@@ -104,7 +106,7 @@ public class AuthService {
 
     public String verifyAccount(String tokenString) {
         Token token = tokenRepo.findByTokenString(tokenString)
-                .orElseThrow(() -> new AllExceptionGuard("Invalid token"));
+                .orElseThrow(() -> new GenericException("Invalid token"));
         fetchAndEnableUser(token);
         tokenRepo.deleteById(token.getId()); // TODO - ensure to delete unused/unactivated tokens
         return "Account Activated Successfully";
@@ -114,7 +116,7 @@ public class AuthService {
     private void fetchAndEnableUser(Token token) {
         String userId = token.getUser().getId();
         User user = userRepo.findById(userId)
-                .orElseThrow(() -> new AllExceptionGuard("User does not exist, please register again"));
+                .orElseThrow(() -> new GenericException("User does not exist, please register again"));
         user.setEnabled(true);
         userRepo.save(user);
     }
@@ -129,6 +131,12 @@ public class AuthService {
         generateAndSendEmail(email, body);
 
         return AuthenticationResponse.builder().message(body).build();
+    }
+
+    public User getCurrentUser() {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        String currentUserName = authentication.getName();
+        return userService.findByUsernameOrEmail(currentUserName);
     }
 
 }
