@@ -58,7 +58,7 @@ public class AuthService {
         String jwtToken = jwtService.generateToken(user);
 
 
-        return  AuthenticationResponse.builder().message(body).token(jwtToken).build();
+        return  AuthenticationResponse.builder().detail(body).token(jwtToken).build();
 
     }
 
@@ -93,13 +93,11 @@ public class AuthService {
                 UsernamePasswordAuthenticationToken(loginDto.getEmail(), loginDto.getPassword())
         );
         // user is authenticated
-        System.out.println("Here");
-        var user = userRepo.findByEmail(loginDto.getEmail())
-                    .orElseThrow(() -> new UsernameNotFoundException("No user with that Email"));
+        var user = userService.findByUsernameOrEmail(loginDto.getEmail());
 
         String jwtToken = jwtService.generateToken(user);
 
-        return AuthenticationResponse.builder().message("LogIn Successful").token(jwtToken).build();
+        return AuthenticationResponse.builder().detail("LogIn Successful").token(jwtToken).build();
     }
 
     // =========================== Verify with token ===================
@@ -130,7 +128,7 @@ public class AuthService {
         String body = mailService.buildBody(token.getTokenString());
         generateAndSendEmail(email, body);
 
-        return AuthenticationResponse.builder().message(body).build();
+        return AuthenticationResponse.builder().detail(body).build();
     }
 
     public User getCurrentUser() {

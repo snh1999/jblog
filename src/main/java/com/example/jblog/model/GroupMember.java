@@ -18,7 +18,7 @@ public class GroupMember {
     @JsonIgnore
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
-    private int id;
+    private String id;
     @JsonIgnore
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "user_id")
@@ -26,7 +26,7 @@ public class GroupMember {
 
     @JsonIgnore
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
-    @JoinColumn(name = "group_id", referencedColumnName = "groupId")
+    @JoinColumn(name = "group_id", referencedColumnName = "id")
     private Group group;
     private boolean isUserJoined;
     private boolean isUserApproved;

@@ -23,6 +23,6 @@ public class UserService {
 
     public User findByUsernameOrEmail(String usernameOrEmail) {
         return userRepo.findByUsernameOrEmail(usernameOrEmail, usernameOrEmail)
-                .orElseThrow(() -> new UsernameNotFoundException("No user with that details"));
+                .orElseThrow(() -> new UsernameNotFoundException("No user Found"));
     }
 }

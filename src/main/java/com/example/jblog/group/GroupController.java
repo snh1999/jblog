@@ -45,9 +45,14 @@ public class GroupController {
         return ResponseEntity.status(HttpStatus.ACCEPTED).body(groupService.delete(id));
     }
 
-    @PostMapping("{id}")
+    @GetMapping("{id}/join")
     public ResponseEntity<GroupMember> joinGroup(@PathVariable String id) {
         return ResponseEntity.status(HttpStatus.CREATED).body(groupService.joinGroup(id));
+    }
+
+    @GetMapping("{id}/leave")
+    public ResponseEntity<String> leaveGroup(@PathVariable String id) {
+        return ResponseEntity.status(HttpStatus.CREATED).body(groupService.leaveGroup(id));
     }
 
     @PostMapping("{id}/members")
@@ -73,6 +78,11 @@ public class GroupController {
     @GetMapping("{id}/moderators")
     public ResponseEntity<List<User>> getModerators(@PathVariable String id) {
         return ResponseEntity.status(HttpStatus.OK).body(groupService.getAllModerators(id));
+    }
+
+    @DeleteMapping("{id}/moderators")
+    public ResponseEntity<String> removeModerators(@PathVariable String id, @RequestBody AddUserDto addUserDto) {
+        return ResponseEntity.status(HttpStatus.OK).body(groupService.removeModerator(id, addUserDto.getUserName()));
     }
 
 

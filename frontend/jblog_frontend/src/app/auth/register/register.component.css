@@ -1,0 +1,7 @@
+.register-section {
+  margin: 100px;
+}
+
+.register:hover {
+  opacity: 0.6;
+}

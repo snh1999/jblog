@@ -29,6 +29,8 @@ public class Post {
     private String title;
     @Column(unique = true)
     private String url;
+
+    private String summary;
     @Lob
     private String description;
     private Integer voteCount;

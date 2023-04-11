@@ -7,7 +7,7 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJiYWxseSIsImlhdCI6MTY4MDQ1N
 ###
 DELETE  http://localhost:8080/api/users
 
-###
+### register
 POST http://localhost:8080/api/auth/register 
 Content-Type: application/json
 
@@ -18,7 +18,7 @@ Content-Type: application/json
 }
 
 
-### LOG In
+### log in
 POST http://localhost:8080/api/auth/login 
 Content-Type: application/json
 

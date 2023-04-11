@@ -2,6 +2,8 @@ package com.example.jblog.post;
 
 import com.example.jblog.auth.AuthService;
 import com.example.jblog.filter.GenericException;
+import com.example.jblog.filter.ResourceNotFoundException;
+import com.example.jblog.group.GroupService;
 import com.example.jblog.model.Post;
 import com.example.jblog.model.User;
 import com.example.jblog.post.dto.PostDto;
@@ -12,8 +14,9 @@ import java.util.List;
 
 public class PostService {
 
-    private PostRepo PostRepo;
+    private PostRepo postRepo;
     private AuthService authService;
+    private GroupService groupService;
 
     @Transactional
     public Post create(PostDto postDto) {
@@ -22,50 +25,58 @@ public class PostService {
                 .title(postDto.getTitle())
                 .author(user)
                 .description(postDto.getDescription())
-
+                .summary(postDto.getSummary())
+                .url(postDto.getUrl())
+                .category(postDto.getCategory())
                 .build();
 
-//        if (PostDto.getUrl().isBlank()) Post.setUrl(Post.getId());
-//        else Post.setUrl(PostDto.getUrl());
-//
-//        PostRepo.save(Post);
-//        return Post;
-        return null;
+        if (!postDto.getGroupId().isBlank()) {
+            // find group
+            return null;
+        }
+
+        return postRepo.save(post);
     }
 
     public List<Post> findAll() {
-        return PostRepo.findAll();
+        return postRepo.findAll();
     }
 
-    public Post findById(String id) {
-        return null;
-//        return PostRepo.findbyIdOrUrl(id, id).orElseThrow(() -> new ResourceAccessException("Not found"));
+    public Post findPost(String id) {
+        return findByIdOrUrl(id);
+    }
+
+    private Post findByIdOrUrl(String idOrUrl) {
+        return postRepo.findByIdOrUrl(idOrUrl, idOrUrl).orElseThrow(() -> new ResourceNotFoundException("Post Not found"));
     }
 
     public String update(String id, PostDto postDto)  {
 
-//        Post Post = this.findById(id);
-//        this.checkAuthorization(Post.getOwner());
+        Post post = this.findPost(id);
+        this.checkAuthorization(post.getAuthor().getId());
 //
-//        if (!PostDto.getName().isBlank()) Post.setName(PostDto.getName());
-//        if (!PostDto.getDescription().isBlank()) Post.setDescription(PostDto.getDescription());
-//        if (!PostDto.getUrl().isBlank()) Post.setName(PostDto.getUrl());
+        if (!postDto.getTitle().isBlank()) post.setTitle(postDto.getTitle());
+        if (!postDto.getDescription().isBlank()) post.setDescription(postDto.getDescription());
+        if (!postDto.getSummary().isBlank()) post.setSummary(postDto.getSummary());
+        if (!postDto.getSummary().isBlank()) post.setSummary(postDto.getSummary());
+        if (postDto.getCategory() != null) post.setCategory(postDto.getCategory());
 
-//        PostRepo.save(Post);
+        postRepo.save(post);
         return "Updated Successfully";
     }
 
     public String delete(String id)  {
-        Post Post = this.findById(id);
-//        this.checkAuthorization(Post.getOwner());
+        Post post = this.findPost(id);
+        this.checkAuthorization(post.getAuthor().getId());
 
-//        PostRepo.delete(Post);
+        postRepo.delete(post);
         return "Deleted Successfully";
 
     }
 
-    private void checkAuthorization(User owner) {
+    private void checkAuthorization(String authorId) {
         String currentUser = authService.getCurrentUser().getId();
-        if(!currentUser.equals(owner.getId())) throw new GenericException("Unauthorized");
+        if(!currentUser.equals(authorId)) throw new GenericException("Unauthorized, you can not perform this operation");
     }
+
 }

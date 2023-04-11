@@ -11,14 +11,7 @@ import org.springframework.web.ErrorResponse;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class MyExceptionResponse implements ErrorResponse {
-
-    private HttpStatusCode statusCode;
+public class MyExceptionResponse {
     private String details;
 
-
-    @NonNull
-    public ProblemDetail getBody() {
-        return ProblemDetail.forStatusAndDetail(statusCode, details);
-    }
 }

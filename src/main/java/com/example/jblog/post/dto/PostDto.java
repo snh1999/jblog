@@ -22,6 +22,7 @@ import static jakarta.persistence.FetchType.LAZY;
 public class PostDto {
     private String title;
     private String url;
+    private String summary;
     private String description;
     private PostCategory category; // create index on this
     private String groupId;

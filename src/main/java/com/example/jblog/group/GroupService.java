@@ -89,6 +89,8 @@ public class GroupService {
         Group group = this.findById(id);
         isUserOwner(group.getOwner());
         User user = this.userRepo.findByUsername(userName).orElseThrow(()-> new ResourceNotFoundException("User does not exist"));
+        if (!this.isUserMember(group, user)) throw new ResourceNotFoundException("User Not part of the group");
+
         group.getModerators().add(user);
         groupRepo.save(group);
         return "Successfully Added";
@@ -127,6 +129,9 @@ public class GroupService {
     public String leaveGroup(String id) {
         User currentUser = this.authService.getCurrentUser();
         Group group = this.findById(id);
+
+        removeModerator(group.getId(), currentUser.getUsername());
+
         return removeMember(group, currentUser);
     }
 
@@ -157,13 +162,14 @@ public class GroupService {
         return false;
     }
 
-
-    private User getUsertoOperate(String userName, User currentUser) {
-        User user;
-        if (currentUser.getUsername().equals(userName)) user = currentUser;
-        else user =  this.userRepo.findByUsername(userName).orElseThrow(()-> new ResourceNotFoundException("User does not exist"));
-        return user;
+    private boolean isUserMember(Group group, User user){
+        List<GroupMember> moderators = group.getMembers();
+        for (var moderator : moderators) {
+            if(moderator.getUser().getId().equals(user.getId())) {
+                return true;
+            }
+        }
+        return false;
     }
-
 
 }
