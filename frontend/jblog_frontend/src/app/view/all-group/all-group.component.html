@@ -1,0 +1,15 @@
+<div class="container mx-auto sm:px-4">
+    <div class="flex flex-wrap ">
+        <hr />
+        <div class="md:w-3/4 pr-4 pl-4">
+            <h2>List of Subreddits</h2>
+            <ul>
+                <li *ngFor="let group of groups"><a routerLink="/group/{{group.id}}">{{group.name}}</a>
+                </li>
+            </ul>
+        </div>
+        <div class="md:w-1/4 pr-4 pl-4">
+            <app-sidebar></app-sidebar>
+        </div>
+    </div>
+</div>

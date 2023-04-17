@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
-import { LoginReqPayload } from '../payloads/login-req.payload';
+import { LoginReqPayload } from '../dtos/login-req.payload';
 import { AuthService } from '../services/auth.service';
 import { catchError, tap } from 'rxjs/operators';
 import { of } from 'rxjs';
@@ -51,7 +51,7 @@ export class LoginComponent implements OnInit {
       .login(this.loginReqPayload)
       .pipe(
         tap((data) => {
-          this.toastr.info(data);
+          this.toastr.success(data);
           this.router.navigate(['/']);
         }),
         catchError((error) => {
@@ -61,14 +61,5 @@ export class LoginComponent implements OnInit {
         })
       )
       .subscribe();
-
-    // .subscribe((data) => {
-    //   if (data) {
-    //     this.router.navigateByUrl('/');
-    //     this.toastr.success('Login Successful');
-    //   } else {
-    //     this.isError = true;
-    //   }
-    // });
   }
 }

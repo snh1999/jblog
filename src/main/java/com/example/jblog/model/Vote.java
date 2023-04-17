@@ -1,5 +1,6 @@
 package com.example.jblog.model;
 
+import com.example.jblog.model.enums.VoteType;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -16,6 +17,8 @@ import static jakarta.persistence.GenerationType.UUID;
 @NoArgsConstructor
 @Entity
 @Builder
+@Table(name = "votes",
+        uniqueConstraints = @UniqueConstraint(columnNames = {"postId", "userId"}))
 public class Vote {
     @Id
     @GeneratedValue(strategy = UUID)
@@ -32,11 +35,3 @@ public class Vote {
     private User user;
 }
 
-enum VoteType {
-    UPVOTE(1),
-    DOWNVOTE(-1),
-    ;
-
-    VoteType(int direction) {
-    }
-}

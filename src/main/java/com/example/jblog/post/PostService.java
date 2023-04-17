@@ -4,19 +4,25 @@ import com.example.jblog.auth.AuthService;
 import com.example.jblog.filter.GenericException;
 import com.example.jblog.filter.ResourceNotFoundException;
 import com.example.jblog.group.GroupService;
+import com.example.jblog.model.Comment;
+import com.example.jblog.model.Group;
 import com.example.jblog.model.Post;
 import com.example.jblog.model.User;
 import com.example.jblog.post.dto.PostDto;
 import com.example.jblog.repository.PostRepo;
 import jakarta.transaction.Transactional;
+import lombok.AllArgsConstructor;
+import lombok.RequiredArgsConstructor;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
-
+@Service
+@RequiredArgsConstructor
 public class PostService {
 
-    private PostRepo postRepo;
-    private AuthService authService;
-    private GroupService groupService;
+    private final PostRepo postRepo;
+    private final AuthService authService;
+    private final GroupService groupService;
 
     @Transactional
     public Post create(PostDto postDto) {
@@ -29,10 +35,9 @@ public class PostService {
                 .url(postDto.getUrl())
                 .category(postDto.getCategory())
                 .build();
-
         if (!postDto.getGroupId().isBlank()) {
-            // find group
-            return null;
+            Group group = groupService.findById(postDto.getGroupId());
+            post.setGroup(group);
         }
 
         return postRepo.save(post);
@@ -51,14 +56,14 @@ public class PostService {
     }
 
     public String update(String id, PostDto postDto)  {
+        Post post = findPost(id);
 
-        Post post = this.findPost(id);
         this.checkAuthorization(post.getAuthor().getId());
-//
+
         if (!postDto.getTitle().isBlank()) post.setTitle(postDto.getTitle());
         if (!postDto.getDescription().isBlank()) post.setDescription(postDto.getDescription());
         if (!postDto.getSummary().isBlank()) post.setSummary(postDto.getSummary());
-        if (!postDto.getSummary().isBlank()) post.setSummary(postDto.getSummary());
+        if (postDto.getUrl()!= null && !postDto.getUrl().isBlank()) post.setUrl(postDto.getSummary());
         if (postDto.getCategory() != null) post.setCategory(postDto.getCategory());
 
         postRepo.save(post);
@@ -79,4 +84,8 @@ public class PostService {
         if(!currentUser.equals(authorId)) throw new GenericException("Unauthorized, you can not perform this operation");
     }
 
+    public void updateAndSaveVoteCount(Post post, int voteAdd) {
+        post.setVoteCount(post.getVoteCount() + voteAdd);
+        postRepo.save(post);
+    }
 }

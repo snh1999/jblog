@@ -127,5 +127,80 @@ Content-Type: application/json
     "username": "bally",
 }
 
-###
+
+
+### POST
+### Create new Post
+POST http://localhost:8080/api/post
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJiYWxseSIsImlhdCI6MTY4MDQ1NzE5OCwiZXhwIjoxNjg4MjMzMTk4fQ.kpjz8pUoMwrz5C5NZEEiUDuJzRRXDbtQVLssUSN3TOo
+Content-Type: application/json
+
+{
+    "title": "last Post",
+    "summary": "sdfjkasdfjdshlfhasd",
+    "category": 1,
+    "description": "dfbadsjkhfdshklfdksf",
+    "url": "sxsdadfdf"
+}
+
+### Get all Post
+GET http://localhost:8080/api/post
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJiYWxseSIsImlhdCI6MTY4MDQ1NzE5OCwiZXhwIjoxNjg4MjMzMTk4fQ.kpjz8pUoMwrz5C5NZEEiUDuJzRRXDbtQVLssUSN3TOo
+
+### Get Post by Id
+GET  http://localhost:8080/api/post/0b20351d-7a66-4103-9acd-b207b4552502
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJiYWxseSIsImlhdCI6MTY4MDQ1NzE5OCwiZXhwIjoxNjg4MjMzMTk4fQ.kpjz8pUoMwrz5C5NZEEiUDuJzRRXDbtQVLssUSN3TOo
+
+### Edit Post
+PATCH http://localhost:8080/api/post/0b20351d-7a66-4103-9acd-b207b4552502
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJiYWxseSIsImlhdCI6MTY4MDQ1NzE5OCwiZXhwIjoxNjg4MjMzMTk4fQ.kpjz8pUoMwrz5C5NZEEiUDuJzRRXDbtQVLssUSN3TOo
+Content-Type: application/json
+
+{
+    "title": "first post edit"
+}
+
+### Delete Post
+DELETE  http://localhost:8080/api/group/971ebcca-9587-45b7-a51a-a3407164bc76
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJiYWxseSIsImlhdCI6MTY4MDQ1NzE5OCwiZXhwIjoxNjg4MjMzMTk4fQ.kpjz8pUoMwrz5C5NZEEiUDuJzRRXDbtQVLssUSN3TOo
+
+
+
+### Get Comments
+GET  http://localhost:8080/api/comment/post/0b20351d-7a66-4103-9acd-b207b4552502
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJiYWxseSIsImlhdCI6MTY4MDQ1NzE5OCwiZXhwIjoxNjg4MjMzMTk4fQ.kpjz8pUoMwrz5C5NZEEiUDuJzRRXDbtQVLssUSN3TOo
+
+
+### Create Comment  
+POST  http://localhost:8080/api/comment
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJiYWxseSIsImlhdCI6MTY4MDQ1NzE5OCwiZXhwIjoxNjg4MjMzMTk4fQ.kpjz8pUoMwrz5C5NZEEiUDuJzRRXDbtQVLssUSN3TOo
+Content-Type: application/json
+
+{
+    "text" : "bal ly er coment",
+    "postId" : "0b20351d-7a66-4103-9acd-b207b4552502"
+}
+
+### Create Comment  
+PATCH http://localhost:8080/api/post/0b20351d-7a66-4103-9acd-b207b4552502/comment/ea754970-0e7e-4f00-bdee-5dc6c6e90953
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJiYWxseSIsImlhdCI6MTY4MDQ1NzE5OCwiZXhwIjoxNjg4MjMzMTk4fQ.kpjz8pUoMwrz5C5NZEEiUDuJzRRXDbtQVLssUSN3TOo
+Content-Type: application/json
+
+{
+    "text" : "bal ly 2 coment"
+}
+
+
+### VOTE
+POST http://localhost:8080/api/vote
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJiYWxseSIsImlhdCI6MTY4MDQ1NzE5OCwiZXhwIjoxNjg4MjMzMTk4fQ.kpjz8pUoMwrz5C5NZEEiUDuJzRRXDbtQVLssUSN3TOo
+Content-Type: application/json
+
+{
+    "voteType": 1,
+    "postId" : "543b6738-858d-4168-8e13-68fbc223313b"
+}
+
+
+### swagger
 GET  http://localhost:8080/v3/api-docs

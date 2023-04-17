@@ -45,6 +45,7 @@ public class Comment {
     private User author;
 
     // for reply to comments
+    @JsonIgnore
     @ManyToOne
     @JoinColumn(name = "parent_comment", referencedColumnName = "id")
     private Comment parentComment;
@@ -56,4 +57,5 @@ public class Comment {
     public String getAuthorName() {
         return this.author.getUsername();
     }
+
 }

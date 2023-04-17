@@ -2,9 +2,9 @@ import { Injectable } from '@angular/core';
 import { Observable, of } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 import { LOGIN_PATH, REGISTER_PATH } from 'env.prod';
-import { LoginReqPayload } from '../payloads/login-req.payload';
-import { RegisterReqPayload } from '../payloads/register-req.payload';
-import { AuthResponse } from '../payloads/auth-response';
+import { LoginReqPayload } from '../dtos/login-req.payload';
+import { RegisterReqPayload } from '../dtos/register-req.payload';
+import { AuthResponse } from '../dtos/auth-response';
 import { map, catchError } from 'rxjs/operators';
 import { LocalStorageService } from 'ngx-webstorage';
 
@@ -42,5 +42,9 @@ export class AuthService {
   storeToken(data: AuthResponse) {
     this.localStorage.store('auth-token', data.token);
     // this.localStorage.store('message', data.detail);
+  }
+
+  getToken() {
+    return this.localStorage.retrieve('auth-token');
   }
 }

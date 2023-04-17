@@ -1,5 +1,6 @@
 package com.example.jblog.user;
 
+import com.example.jblog.filter.ResourceNotFoundException;
 import com.example.jblog.model.User;
 import com.example.jblog.repository.UserRepo;
 import lombok.AllArgsConstructor;
@@ -19,6 +20,11 @@ public class UserService {
 
     public void deleteAllUsers() {
         userRepo.deleteAll();
+    }
+
+    public User findUserById(String field) {
+        return userRepo.findById(field).orElseThrow(() -> new ResourceNotFoundException("UserNotfound"));
+
     }
 
     public User findByUsernameOrEmail(String usernameOrEmail) {

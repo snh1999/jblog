@@ -31,9 +31,10 @@ public class Post {
     private String url;
 
     private String summary;
-    @Lob
+
     private String description;
-    private Integer voteCount;
+    @Builder.Default
+    private Integer voteCount = 0;
     @Builder.Default
     private Instant createdAt = Instant.now();
     private PostCategory category; // create index on this
@@ -43,6 +44,7 @@ public class Post {
     @JoinColumn(name = "authorId") // , referencedColumnName = "userId")
     private User author;
 
+    @JsonIgnore
     @ManyToOne
     @JoinColumn(name = "groupId") // , referencedColumnName = "groupId")
     private Group group;
@@ -50,5 +52,15 @@ public class Post {
     @JsonIgnore
     @OneToMany(mappedBy = "parentPost", fetch = LAZY, cascade = CascadeType.ALL)
     private List<Comment> comments;
+
+    public String getAuthorName() {
+        return this.author.getUsername();
+    }
+
+    public String getGroupUrl() {
+        return this.group != null? this.group.getUrl(): "";
+    }
+
+    public int getCommentCount() {return comments!=null?comments.size():0;}
 }
 

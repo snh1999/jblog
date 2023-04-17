@@ -1,0 +1,11 @@
+<div class="sidebar-view-subreddit">
+    <div style="color: black; font-weight: bold">Browse Subreddits</div>
+    <hr />
+    <span *ngFor="let group of groups">
+        <span class="subreddit-text"><a href="/groups/{{group.id}}">{{group.name}}</a></span>
+        <hr />
+    </span>
+    <div style="text-align: center" *ngIf="viewAll">
+        <a style="font-weight: bold" routerLink="/groups">View All</a>
+    </div>
+</div>

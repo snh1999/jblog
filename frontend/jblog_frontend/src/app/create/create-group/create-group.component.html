@@ -1,0 +1,42 @@
+<div class="container mx-auto sm:px-4">
+    <div class="flex flex-wrap ">
+        <div class="create-group-container">
+            <form class="post-form" [formGroup]="createGroupForm">
+                <div class="mb-4">
+                    <div class="create-group-heading">Create Group</div>
+                    <hr />
+                    <input type="text" [formControlName]="'name'" class="block appearance-none w-full py-1 px-2 mb-1 text-base leading-normal bg-white text-gray-800 border border-gray-200 rounded" style="margin-top: 5px" placeholder="Name">
+                    <textarea type="text" [formControlName]="'description'" style="width: 100%; margin-top: 5px" placeholder="Description"></textarea>
+                    <input type="text" [formControlName]="'url'" class="block appearance-none w-full py-1 px-2 mb-1 text-base leading-normal bg-white text-gray-800 border border-gray-200 rounded" style="margin-top: 5px" placeholder="url">
+                    <select [formControlName]="'groupType'" class="block appearance-none w-full py-1 px-2 mb-1 text-base leading-normal bg-white text-gray-800 border border-gray-200 rounded" style="margin-top: 5px">
+                        <option value="" class="text-gray-100" disabled selected>Select a group type</option>
+                        <option *ngFor="let item of items" [value]="item">{{GroupType[item]}}</option>
+                    </select>
+                    <div>
+                        <div style="margin-top: 5px" class="float-right">
+                            <button (click)="clear()" class="btnDiscard">Clear</button>
+                            <button (click)="createGroup()" class="btnCreateGroup">Create</button>
+                        </div>
+                    </div>
+                    <div class="bg-neutral-800">
+                        <app-dialogue-box *ngIf="showClearDialog" (confirmed)="getClickEvent($event)"></app-dialogue-box>
+                    </div>
+                </div>
+            </form>
+        </div>
+        <!-- <div class="md:w-1/4 pr-4 pl-4">
+            <div class="sidebar">
+                <h5 class="guidelines">Posting to Spring Reddit</h5>
+                <hr />
+                <ul>
+                    <li>Remember the human</li>
+                    <hr />
+                    <li>Behave like you would in real life</li>
+                    <hr />
+                    <li>Don't spam</li>
+                    <hr />
+                </ul>
+            </div>
+        </div> -->
+    </div>
+</div>

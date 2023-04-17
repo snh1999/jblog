@@ -15,7 +15,7 @@
 
                         <div class="mb-4 flex flex-wrap ">
                             <input type="password" id="password" [formControlName]="'password'" placeholder="password" title="password" name="password" class="block appearance-none w-full py-1 px-2 mb-1 text-base leading-normal bg-white text-gray-800 border border-gray-200 rounded" required>
-                            <span class="error-text-span " *ngIf="!loginForm.get('password')?.valid && loginForm.get('password')?.touched"> Password cannot be empty </span>
+                            <span class="error-text-span" *ngIf="!loginForm.get('password')?.valid && loginForm.get('password')?.touched"> Password cannot be empty </span>
                         </div>
 
                         <div class="mb-4 flex flex-wrap justify-center">

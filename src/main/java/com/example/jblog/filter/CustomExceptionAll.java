@@ -49,7 +49,7 @@ public class CustomExceptionAll {
     }
 
     @ExceptionHandler({EntityNotFoundException.class, ResourceNotFoundException.class})
-    public ResponseStatusException handleEntityNotFoundException(EntityNotFoundException ex) {
+    public ResponseStatusException handleEntityNotFoundException(Exception ex) {
         String msg = ex.getMessage();
         return new ResponseStatusException(HttpStatus.NOT_FOUND, msg, ex);
     }

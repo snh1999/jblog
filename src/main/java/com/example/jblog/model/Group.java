@@ -5,7 +5,6 @@ import java.util.List;
 
 import com.example.jblog.model.enums.GroupType;
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -69,4 +68,5 @@ public class Group {
     public String getOwnerName() {
         return this.owner.getUsername();
     }
+    public int getMemberCount() { return members!=null? members.size():0; }
 }

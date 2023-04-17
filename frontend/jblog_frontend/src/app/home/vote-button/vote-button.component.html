@@ -1,0 +1,11 @@
+<div class="md:w-1/6 pr-4 pl-4">
+    <div class="flex flex-col votebox">
+        <div class="p-2">
+            <fa-icon (click)="upvotePost()" class="upvote" [icon]="faArrowUp" [style.color]="upvoteColor"></fa-icon>
+        </div>
+        <div class="p-2 votecount">{{post.voteCount? post.voteCount : 0}}</div>
+        <div class="p-2">
+            <fa-icon (click)="downvotePost()" class="downvote" [icon]="faArrowDown" [style.color]="downvoteColor"></fa-icon>
+        </div>
+    </div>
+</div>

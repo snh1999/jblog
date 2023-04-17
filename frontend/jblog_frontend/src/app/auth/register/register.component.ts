@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { AuthService } from '../services/auth.service';
-import { RegisterReqPayload } from '../payloads/register-req.payload';
+import { RegisterReqPayload } from '../dtos/register-req.payload';
 import { ToastrService } from 'ngx-toastr';
 import { Router } from '@angular/router';
 import { catchError, tap } from 'rxjs/operators';

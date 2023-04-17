@@ -13,6 +13,7 @@ import java.util.Optional;
 
 @Repository
 public interface CommentRepo extends JpaRepository<Comment, String> {
-//     Optional<List<Comment>>findByAuthor(User author);
+    List<Comment>findByAuthor(User author);
+    List<Comment> findByParentCommentIsNullAndParentPost(Post post);
 
 }

@@ -1,0 +1,48 @@
+.dialog-box {
+  display: none;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: #dddddd;
+  padding: 20px;
+  border-radius: 5px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+}
+
+.dialog-box h2 {
+  font-size: 1.5rem;
+  margin-bottom: 10px;
+}
+
+.dialog-box p {
+  margin-bottom: 20px;
+}
+
+.dialog-box button {
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.confirm-button {
+  background-color: #4caf50;
+}
+
+.cancel-button {
+  background-color: #f44336;
+  margin-left: 10px;
+}
+
+.confirmation-dialog {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 16px;
+}
+
+.confirmation-dialog button {
+  margin: 8px;
+}
