@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/01D9017BC68CED30.jblog.main.iml" filepath="$PROJECT_DIR$/.idea/modules/01D9017BC68CED30.jblog.main.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/com.example.jblog.main.iml" filepath="$PROJECT_DIR$/.idea/modules/com.example.jblog.main.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/jblog.main.iml" filepath="$PROJECT_DIR$/.idea/modules/jblog.main.iml" />
+    </modules>
+  </component>
+</project>
